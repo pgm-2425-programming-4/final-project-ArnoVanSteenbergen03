@@ -1,55 +1,69 @@
-import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
 import Backlog from "./Backlog";
 import Pagination from "./Pagination";
 
-const fetchTasks = async (page) => {
-  const res = await axios.get("http://localhost:1337/api/tasks", {
-  params: {
-    "populate[task_status]": "*",
-    "filters[task_status][slug][$eq]": "backlog",
-    "pagination[page]": page,
-    "pagination[pageSize]": 5,
-  },
-});
+export default function PaginatedBacklog() {
+  const [tasks, setTasks] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageCount, setPageCount] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const pageSize = 5;
 
-  const { data, meta } = res.data;
+  useEffect(() => {
+    async function fetchTasks(page) {
+      setLoading(true);
+      setError(null);
+      try {
+        const params = new URLSearchParams({
+          populate: "task_status",
+          "filters[task_status][slug][$eq]": "backlog",
+          "pagination[page]": page,
+          "pagination[pageSize]": pageSize,
+        });
 
-  return {
-    tasks: data.map((task) => ({
-      id: task.id,
-      title: task.attributes.title,
-      status: task.attributes.task_status?.data?.attributes?.name || "Onbekend",
-    })),
-    currentPage: meta.pagination.page,
-    totalPages: meta.pagination.pageCount,
-  };
-};
+        const res = await fetch(`http://localhost:1337/api/tasks?${params.toString()}`);
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        const data = await res.json();
 
+        if (!data.data) {
+          throw new Error("No data field in response");
+        }
 
+        const formattedTasks = data.data.map((item) => ({
+          id: item.id,
+          title: item.title,
+          status: item.task_status?.slug || "unknown",
+        }));
 
-function PaginatedBacklog() {
-  const [page, setPage] = useState(1);
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["backlog", page],
-    queryFn: () => fetchTasks(page),
-    keepPreviousData: true,
-  });
+        setTasks(formattedTasks);
+        setPageCount(data.meta.pagination.pageCount);
+      } catch (err) {
+        setError(err.message || "Unknown error");
+      } finally {
+        setLoading(false);
+      }
+    }
 
-  if (isLoading) return <p>Bezig met laden...</p>;
-  if (isError) return <p>Er ging iets mis!</p>;
+    fetchTasks(currentPage);
+  }, [currentPage]);
+
+  function handlePageChange(page) {
+    setCurrentPage(page);
+  }
 
   return (
     <>
-      <Backlog tasks={data.tasks} />
+      {loading && <p>Loading tasks...</p>}
+      {error && <p style={{ color: "red" }}>Error: {error}</p>}
+      {!loading && !error && <Backlog tasks={tasks} />}
       <Pagination
-        currentPage={data.currentPage}
-        totalPages={data.totalPages}
-        onPageChange={setPage}
+        currentPage={currentPage}
+        pageCount={pageCount}
+        onPageChanged={handlePageChange}
       />
     </>
   );
 }
-
-export default PaginatedBacklog;
