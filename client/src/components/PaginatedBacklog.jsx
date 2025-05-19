@@ -22,7 +22,14 @@ export default function PaginatedBacklog() {
           "pagination[pageSize]": pageSize,
         });
 
-        const res = await fetch(`http://localhost:1337/api/tasks?${params.toString()}`);
+        const res = await fetch(
+          `http://localhost:1337/api/tasks?${params.toString()}`,
+          {
+            headers: {
+              Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
+            },
+          }
+        );
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
         }
