@@ -1,19 +1,21 @@
-module.exports = ({ env }) => ({
-  connection: {
-    client: 'postgres',
+module.exports = ({ env }) => {
+  // Get the complete database URL from environment
+  const connectionString = env('DATABASE_URL');
+  
+  // Basic validation
+  if (!connectionString) {
+    throw new Error('DATABASE_URL is required');
+  }
+
+  return {
     connection: {
-      host: env('DATABASE_HOST'),
-      port: env.int('DATABASE_PORT'),
-      database: env('DATABASE_NAME'),
-      user: env('DATABASE_USERNAME'),
-      password: env('DATABASE_PASSWORD'),
-      ssl: env.bool('DATABASE_SSL', false) ? {
-        rejectUnauthorized: false
-      } : false,
-    },
-    pool: {
-      min: 2,
-      max: 10,
-    },
-  },
-});
+      client: 'postgres',
+      connection: connectionString,
+      ssl: { rejectUnauthorized: false },
+      pool: {
+        min: 2,
+        max: 10
+      }
+    }
+  };
+};
