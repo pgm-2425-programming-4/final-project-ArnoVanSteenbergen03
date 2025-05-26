@@ -9,7 +9,7 @@
     "deploy": "strapi deploy",
     "dev": "set NODE_ENV=development&& strapi develop",
     "develop": "set NODE_ENV=development&& strapi develop",
-    "start": "set NODE_ENV=production&& strapi start",
+    "start": "NODE_ENV=production strapi start",
     "prod": "set NODE_ENV=production&& strapi start",
     "strapi": "strapi",
     "upgrade": "npx @strapi/upgrade latest",
