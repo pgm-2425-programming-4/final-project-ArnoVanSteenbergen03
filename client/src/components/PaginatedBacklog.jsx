@@ -23,7 +23,7 @@ export default function PaginatedBacklog() {
         });
 
         const res = await fetch(
-          `https://finalprojectserver.netlify.app/api/tasks?${params.toString()}`,
+          `https://jammin-api-crdn.onrender.com/api/tasks?${params.toString()}`,
           {
             headers: {
               Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
