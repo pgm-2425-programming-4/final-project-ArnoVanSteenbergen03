@@ -23,7 +23,7 @@ export default function PaginatedBacklog() {
         });
 
         const res = await fetch(
-          `https://jammin-api-crdn.onrender.com/api/tasks?${params.toString()}`,
+          `${import.meta.env.VITE_API_URL}/api/tasks?${params.toString()}`,
           {
             headers: {
               Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
