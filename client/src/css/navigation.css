@@ -1,0 +1,42 @@
+.layout {
+  display: flex;
+}
+
+.navigation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 10rem;
+  height: 100vh;
+  background-color: #767677;
+  color: white;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
+}
+
+.navigation ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navigation li {
+  margin: 1.5rem 0;
+}
+
+.navigation a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.navigation a:hover {
+  text-decoration: underline;
+}
+
+.content {
+  margin-left: 14rem; 
+  padding: 2rem;
+  min-height: 100vh;
+  box-sizing: border-box;
+}

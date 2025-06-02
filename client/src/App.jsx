@@ -1,12 +1,15 @@
 import PaginatedBacklog from "./components/PaginatedBacklog";
+import Navigation from "./components/Navigation";
+import Searchbar from "./components/Searchbar";
 import './App.css'
 
 function App() {
 
   return (
-     <main>
+     <main className="content"> 
+      <Navigation />
+      <Searchbar />
       <h1>Backlog Taken</h1>
-      <p>strapi server is nog niet operationeel</p>
       <PaginatedBacklog />
     </main>
   )
