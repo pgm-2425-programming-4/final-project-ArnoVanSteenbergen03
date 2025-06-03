@@ -1,6 +1,6 @@
 import React from "react";
 
-const Searchbar = () => {
+const Searchbar = ({ onViewBacklog }) => {
   return (
     <div className="task-search-bar">
       <div className="task-search-left">
@@ -22,7 +22,7 @@ const Searchbar = () => {
 
       <div className="task-search-right">
         <button className="btn add-task">Add new task</button>
-        <button className="btn view-backlog">View backlog</button>
+        <button className="btn view-backlog" onClick={onViewBacklog}>View backlog</button>
       </div>
     </div>
   );
