@@ -1,13 +1,22 @@
+import { useState } from "react";
 import PaginatedBacklog from "./components/PaginatedBacklog";
+import Navigation from "./components/Navigation";
+import Searchbar from "./components/Searchbar";
 import './App.css'
 
 function App() {
+  const [showBacklog, setShowBacklog] = useState(false);
+
+  const handleViewBacklog = () => {
+    setShowBacklog(true);
+  };
 
   return (
-     <main>
-      <h1>Backlog Taken</h1>
-      <p>strapi server is nog niet operationeel</p>
-      <PaginatedBacklog />
+    <main className="content"> 
+      <Navigation />
+      <Searchbar onViewBacklog={handleViewBacklog} />
+      
+      {showBacklog && <PaginatedBacklog />}
     </main>
   )
 }
