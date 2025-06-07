@@ -15,9 +15,9 @@ export default function ProjectBoard({ projectId }) {
     async function fetchTasks() {
       setLoading(true);
       const params = new URLSearchParams({
+        populate: "task_status,stack_type",
+        "filters[task_status][slug][$ne]": "backlog",
         "filters[project][id][$eq]": projectId,
-        "populate": "task_status,stack_type",
-        "pagination[pageSize]": 100, // adjust as needed
       });
       const res = await fetch(
         `${import.meta.env.VITE_API_URL}/api/tasks?${params.toString()}`,
@@ -48,9 +48,22 @@ export default function ProjectBoard({ projectId }) {
         <div key={status.slug} style={{ minWidth: 220 }}>
           <h3>{status.label}</h3>
           {getTasksByStatus(status.slug).map((task) => (
-            <div key={task.id} style={{ margin: "1em 0", padding: 12, background: "#fff", borderRadius: 8 }}>
+            <div
+              key={task.id}
+              style={{
+                margin: "1em 0",
+                padding: 12,
+                background: "#fff",
+                borderRadius: 8,
+                boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
+              }}
+            >
               <strong>{task.attributes.title}</strong>
-              {/* Render stack_type, etc. as needed */}
+              {task.attributes.stack_type?.data?.attributes?.name && (
+                <div style={{ marginTop: 4, fontSize: 12, color: "#555" }}>
+                  {task.attributes.stack_type.data.attributes.name}
+                </div>
+              )}
             </div>
           ))}
         </div>

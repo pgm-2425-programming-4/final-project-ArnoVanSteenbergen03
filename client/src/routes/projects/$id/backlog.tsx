@@ -3,7 +3,7 @@ import { useParams } from "@tanstack/react-router";
 import { createFileRoute } from "@tanstack/react-router";
 import PaginatedBacklog from "../../../components/PaginatedBacklog";
 
-export default function ProjectBacklog() {
+function ProjectBacklog() {
   const { id } = useParams({ strict: false });
 
   return (
