@@ -1,0 +1,18 @@
+{
+  "kind": "collectionType",
+  "collectionName": "stack_types",
+  "info": {
+    "singularName": "stack-type",
+    "pluralName": "stack-types",
+    "displayName": "StackType"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "stack_name": {
+      "type": "string",
+      "required": true
+    }
+  }
+}
