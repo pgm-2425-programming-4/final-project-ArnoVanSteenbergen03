@@ -1,12 +1,25 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute } from '@tanstack/react-router'
+import ProjectBoard from '../../components/ProjectBoard'
+import Searchbar from '../../components/Searchbar'
+import PaginatedBacklog from '../../components/PaginatedBacklog'
+import { useState } from 'react';
 
 function ProjectPage() {
   const { id } = Route.useParams();
-  // You can fetch and display project data here using the id
+  const [showBacklog, setShowBacklog] = useState(false);
+
   return (
     <div>
-      <h2>Project {id}</h2>
-      {/* Add your project details or tasks here */}
+      <Searchbar onViewBacklog={() => setShowBacklog(true)} />
+      <h3>Welcome to project {id}</h3>
+      {showBacklog ? (
+        <>
+          <button onClick={() => setShowBacklog(false)}>Back to board</button>
+          <PaginatedBacklog projectId={id} />
+        </>
+      ) : (
+        <ProjectBoard projectId={id} />
+      )}
     </div>
   );
 }

@@ -1,8 +1,5 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
-
-const API_URL = import.meta.env.VITE_API_URL;
-const API_KEY = import.meta.env.VITE_API_KEY;
 
 export default function Navigation() {
   const [projects, setProjects] = useState([]);
@@ -10,15 +7,18 @@ export default function Navigation() {
   useEffect(() => {
     async function fetchProjects() {
       try {
-        const res = await fetch(`${API_URL}/api/projects`, {
-          headers: {
-            Authorization: `Bearer ${API_KEY}`,
-          },
-        });
+        const res = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/projects`,
+          {
+            headers: {
+              Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
+            },
+          }
+        );
         const data = await res.json();
         setProjects(data.data || []);
       } catch (err) {
-        console.log(err);
+        console.log(err)
         setProjects([]);
       }
     }
@@ -34,7 +34,7 @@ export default function Navigation() {
         {projects.map((project) => (
           <li key={project.id}>
             <Link to={`/projects/${project.id}`}>
-              {project.attributes?.project_name || `Project ${project.id}`}
+              {project.project_name || `Project ${project.id}`}
             </Link>
           </li>
         ))}
