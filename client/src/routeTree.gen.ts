@@ -10,133 +10,138 @@
 
 // Import Routes
 
-import { Route as rootRoute } from './routes/__root'
-import { Route as IndexImport } from './routes/index'
-import { Route as ProjectsIdImport } from './routes/projects/$id'
-import { Route as AboutImport } from './routes/about.'
-import { Route as ProjectsIdBacklogImport } from './routes/projects/$id/backlog'
+import { Route as rootRoute } from "./routes/__root";
+import { Route as IndexImport } from "./routes/index";
+import { Route as ProjectsSlugImport } from "./routes/projects/$slug";
+import { Route as AboutImport } from "./routes/about.";
+import { Route as ProjectsSlugBacklogImport } from "./routes/projects/$slug/backlog";
 
 // Create/Update Routes
 
 const IndexRoute = IndexImport.update({
-  id: '/',
-  path: '/',
+  id: "/",
+  path: "/",
   getParentRoute: () => rootRoute,
-} as any)
+} as any);
 
-const ProjectsIdRoute = ProjectsIdImport.update({
-  id: '/projects/$id',
-  path: '/projects/$id',
+const ProjectsSlugRoute = ProjectsSlugImport.update({
+  id: "/projects/$slug",
+  path: "/projects/$slug",
   getParentRoute: () => rootRoute,
-} as any)
+} as any);
 
 const AboutRoute = AboutImport.update({
-  id: '/about/',
-  path: '/about/',
+  id: "/about/",
+  path: "/about/",
   getParentRoute: () => rootRoute,
-} as any)
+} as any);
 
-const ProjectsIdBacklogRoute = ProjectsIdBacklogImport.update({
-  id: '/backlog',
-  path: '/backlog',
-  getParentRoute: () => ProjectsIdRoute,
-} as any)
+const ProjectsSlugBacklogRoute = ProjectsSlugBacklogImport.update({
+  id: "/backlog",
+  path: "/backlog",
+  getParentRoute: () => ProjectsSlugRoute,
+} as any);
 
 // Populate the FileRoutesByPath interface
 
-declare module '@tanstack/react-router' {
+declare module "@tanstack/react-router" {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexImport
-      parentRoute: typeof rootRoute
-    }
-    '/about/': {
-      id: '/about/'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutImport
-      parentRoute: typeof rootRoute
-    }
-    '/projects/$id': {
-      id: '/projects/$id'
-      path: '/projects/$id'
-      fullPath: '/projects/$id'
-      preLoaderRoute: typeof ProjectsIdImport
-      parentRoute: typeof rootRoute
-    }
-    '/projects/$id/backlog': {
-      id: '/projects/$id/backlog'
-      path: '/backlog'
-      fullPath: '/projects/$id/backlog'
-      preLoaderRoute: typeof ProjectsIdBacklogImport
-      parentRoute: typeof ProjectsIdImport
-    }
+    "/": {
+      id: "/";
+      path: "/";
+      fullPath: "/";
+      preLoaderRoute: typeof IndexImport;
+      parentRoute: typeof rootRoute;
+    };
+    "/about/": {
+      id: "/about/";
+      path: "/about";
+      fullPath: "/about";
+      preLoaderRoute: typeof AboutImport;
+      parentRoute: typeof rootRoute;
+    };
+    "/projects/$slug": {
+      id: "/projects/$slug";
+      path: "/projects/$slug";
+      fullPath: "/projects/$slug";
+      preLoaderRoute: typeof ProjectsSlugImport;
+      parentRoute: typeof rootRoute;
+    };
+    "/projects/$slug/backlog": {
+      id: "/projects/$slug/backlog";
+      path: "/backlog";
+      fullPath: "/projects/$slug/backlog";
+      preLoaderRoute: typeof ProjectsSlugBacklogImport;
+      parentRoute: typeof ProjectsSlugImport;
+    };
   }
 }
 
 // Create and export the route tree
 
-interface ProjectsIdRouteChildren {
-  ProjectsIdBacklogRoute: typeof ProjectsIdBacklogRoute
+interface ProjectsSlugRouteChildren {
+  ProjectsSlugBacklogRoute: typeof ProjectsSlugBacklogRoute;
 }
 
-const ProjectsIdRouteChildren: ProjectsIdRouteChildren = {
-  ProjectsIdBacklogRoute: ProjectsIdBacklogRoute,
-}
+const ProjectsSlugRouteChildren: ProjectsSlugRouteChildren = {
+  ProjectsSlugBacklogRoute: ProjectsSlugBacklogRoute,
+};
 
-const ProjectsIdRouteWithChildren = ProjectsIdRoute._addFileChildren(
-  ProjectsIdRouteChildren,
-)
+const ProjectsSlugRouteWithChildren = ProjectsSlugRoute._addFileChildren(
+  ProjectsSlugRouteChildren
+);
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/projects/$id': typeof ProjectsIdRouteWithChildren
-  '/projects/$id/backlog': typeof ProjectsIdBacklogRoute
+  "/": typeof IndexRoute;
+  "/about": typeof AboutRoute;
+  "/projects/$slug": typeof ProjectsSlugRouteWithChildren;
+  "/projects/$slug/backlog": typeof ProjectsSlugBacklogRoute;
 }
 
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/projects/$id': typeof ProjectsIdRouteWithChildren
-  '/projects/$id/backlog': typeof ProjectsIdBacklogRoute
+  "/": typeof IndexRoute;
+  "/about": typeof AboutRoute;
+  "/projects/$slug": typeof ProjectsSlugRouteWithChildren;
+  "/projects/$slug/backlog": typeof ProjectsSlugBacklogRoute;
 }
 
 export interface FileRoutesById {
-  __root__: typeof rootRoute
-  '/': typeof IndexRoute
-  '/about/': typeof AboutRoute
-  '/projects/$id': typeof ProjectsIdRouteWithChildren
-  '/projects/$id/backlog': typeof ProjectsIdBacklogRoute
+  __root__: typeof rootRoute;
+  "/": typeof IndexRoute;
+  "/about/": typeof AboutRoute;
+  "/projects/$slug": typeof ProjectsSlugRouteWithChildren;
+  "/projects/$slug/backlog": typeof ProjectsSlugBacklogRoute;
 }
 
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/projects/$id' | '/projects/$id/backlog'
-  fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/projects/$id' | '/projects/$id/backlog'
-  id: '__root__' | '/' | '/about/' | '/projects/$id' | '/projects/$id/backlog'
-  fileRoutesById: FileRoutesById
+  fileRoutesByFullPath: FileRoutesByFullPath;
+  fullPaths: "/" | "/about" | "/projects/$slug" | "/projects/$slug/backlog";
+  fileRoutesByTo: FileRoutesByTo;
+  to: "/" | "/about" | "/projects/$slug" | "/projects/$slug/backlog";
+  id:
+    | "__root__"
+    | "/"
+    | "/about/"
+    | "/projects/$slug"
+    | "/projects/$slug/backlog";
+  fileRoutesById: FileRoutesById;
 }
 
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
-  ProjectsIdRoute: typeof ProjectsIdRouteWithChildren
+  IndexRoute: typeof IndexRoute;
+  AboutRoute: typeof AboutRoute;
+  ProjectsSlugRoute: typeof ProjectsSlugRouteWithChildren;
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
-  ProjectsIdRoute: ProjectsIdRouteWithChildren,
-}
+  ProjectsSlugRoute: ProjectsSlugRouteWithChildren,
+};
 
 export const routeTree = rootRoute
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>()
+  ._addFileTypes<FileRouteTypes>();
 
 /* ROUTE_MANIFEST_START
 {
@@ -146,7 +151,7 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/about/",
-        "/projects/$id"
+        "/projects/$slug"
       ]
     },
     "/": {
@@ -155,15 +160,15 @@ export const routeTree = rootRoute
     "/about/": {
       "filePath": "about..tsx"
     },
-    "/projects/$id": {
-      "filePath": "projects/$id.tsx",
+    "/projects/$slug": {
+      "filePath": "projects/$slug.tsx",
       "children": [
-        "/projects/$id/backlog"
+        "/projects/$slug/backlog"
       ]
     },
-    "/projects/$id/backlog": {
-      "filePath": "projects/$id/backlog.tsx",
-      "parent": "/projects/$id"
+    "/projects/$slug/backlog": {
+      "filePath": "projects/$slug/backlog.tsx",
+      "parent": "/projects/$slug"
     }
   }
 }

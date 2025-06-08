@@ -18,7 +18,7 @@ export default function Navigation() {
         const data = await res.json();
         setProjects(data.data || []);
       } catch (err) {
-        console.log(err)
+        console.log(err);
         setProjects([]);
       }
     }
@@ -33,8 +33,8 @@ export default function Navigation() {
         </li>
         {projects.map((project) => (
           <li key={project.id}>
-            <Link to={`/projects/${project.id}`}>
-              {project.project_name || `Project ${project.id}`}
+            <Link to={`/projects/${project.slug}`}>
+              {project.project_name || `Project ${project.slug}`}
             </Link>
           </li>
         ))}

@@ -4,16 +4,16 @@ import { createFileRoute } from "@tanstack/react-router";
 import PaginatedBacklog from "../../../components/PaginatedBacklog";
 
 function ProjectBacklog() {
-  const { id } = useParams({ strict: false });
+  const { slug } = useParams({ strict: false });
 
   return (
     <div>
-      <h2>Backlog for Project {id}</h2>
-      <PaginatedBacklog projectId={id} />
+      <h2>Backlog for Project {slug}</h2>
+      <PaginatedBacklog projectId={slug} />
     </div>
   );
 }
 
-export const Route = createFileRoute("/projects/$id/backlog")({
+export const Route = createFileRoute("/projects/$slug/backlog")({
   component: ProjectBacklog,
 });

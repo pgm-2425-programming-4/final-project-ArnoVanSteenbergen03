@@ -1,42 +1,52 @@
 import React, { useEffect, useState } from "react";
 
-const STATUSES = [
-  { slug: "to-do", label: "To do" },
-  { slug: "in-progress", label: "In progress" },
-  { slug: "ready-for-review", label: "Ready for review" },
-  { slug: "done", label: "Done" },
-];
-
-export default function ProjectBoard({ projectId }) {
+export default function ProjectBoard({ projectId, selectedStackType }) {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchTasks() {
       setLoading(true);
-      const params = new URLSearchParams({
-        populate: "task_status,stack_type",
-        "filters[task_status][slug][$ne]": "backlog",
-        "filters[project][id][$eq]": projectId,
-      });
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/tasks?${params.toString()}`,
-        {
-          headers: {
-            Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
-          },
-        }
-      );
-      const data = await res.json();
-      setTasks(data.data || []);
-      setLoading(false);
+      try {
+        const params = new URLSearchParams({
+          populate: "*",
+          "filters[project]": projectId,
+        });
+        const res = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/tasks?${params.toString()}`,
+          {
+            headers: {
+              Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
+            },
+          }
+        );
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+        const data = await res.json();
+        setTasks(data.data || []);
+      } catch (err) {
+        console.error(err);
+        setTasks([]);
+      } finally {
+        setLoading(false);
+      }
     }
     if (projectId) fetchTasks();
   }, [projectId]);
 
-  function getTasksByStatus(statusSlug) {
-    return tasks.filter(
-      (task) => task.attributes.task_status?.data?.attributes?.slug === statusSlug
+  // Get unique statuses and stack types from tasks
+  const statuses = Array.from(
+    new Set(tasks.map((task) => task.task_status?.name || "No status"))
+  );
+
+  // Filter tasks by selected stack type if set
+  const filteredTasks = selectedStackType
+    ? tasks.filter((task) => task.stack_type?.stack_name === selectedStackType)
+    : tasks;
+
+  // Group tasks by status
+  function getTasksByStatus(statusName) {
+    return filteredTasks.filter(
+      (task) => (task.task_status?.name || "No status") === statusName
     );
   }
 
@@ -44,26 +54,25 @@ export default function ProjectBoard({ projectId }) {
 
   return (
     <div style={{ display: "flex", gap: "2rem" }}>
-      {STATUSES.map((status) => (
-        <div key={status.slug} style={{ minWidth: 220 }}>
-          <h3>{status.label}</h3>
-          {getTasksByStatus(status.slug).map((task) => (
+      {statuses.map((status) => (
+        <div key={status} style={{ minWidth: 220 }}>
+          <h3>{status}</h3>
+          {getTasksByStatus(status).map((task) => (
             <div
               key={task.id}
               style={{
                 margin: "1em 0",
                 padding: 12,
                 background: "#fff",
+                color: "#333",
                 borderRadius: 8,
                 boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
               }}
             >
-              <strong>{task.attributes.title}</strong>
-              {task.attributes.stack_type?.data?.attributes?.name && (
-                <div style={{ marginTop: 4, fontSize: 12, color: "#555" }}>
-                  {task.attributes.stack_type.data.attributes.name}
-                </div>
-              )}
+              <strong>{task.title}</strong>
+              <div style={{ marginTop: 4, fontSize: 12, color: "#555" }}>
+                Stack: {task.stack_type?.stack_name || "No stack type"}
+              </div>
             </div>
           ))}
         </div>
