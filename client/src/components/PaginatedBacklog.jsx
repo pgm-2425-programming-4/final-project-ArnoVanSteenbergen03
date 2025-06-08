@@ -18,7 +18,7 @@ export default function PaginatedBacklog({ projectId }) {
         const params = new URLSearchParams({
           populate: "task_status",
           "filters[task_status][slug][$eq]": "backlog",
-          "filters[project][id][$eq]": projectId, 
+          "filters[project][id][$eq]": projectId,
           "pagination[page]": page,
           "pagination[pageSize]": pageSize,
         });
@@ -58,7 +58,7 @@ export default function PaginatedBacklog({ projectId }) {
     if (projectId) {
       fetchTasks(currentPage);
     }
-  }, [currentPage, projectId]); 
+  }, [currentPage, projectId]);
 
   function handlePageChange(page) {
     setCurrentPage(page);
