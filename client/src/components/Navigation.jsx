@@ -29,17 +29,21 @@ export default function Navigation() {
     <nav className="navigation">
       <ul>
         <li>
-          <Link to="/">Home</Link>
+          <Link to="/" activeProps={{ className: "active" }}>Home</Link>
+        </li>
+        <li>
+          <h2>PROJECTS</h2>
         </li>
         {projects.map((project) => (
           <li key={project.id}>
-            <Link to={`/projects/${project.slug}`}>
+            <Link to={`/projects/${project.slug}`} activeProps={{ className: "active" }}>
               {project.project_name || `Project ${project.slug}`}
             </Link>
           </li>
         ))}
+        <li><h2>INFO</h2></li>
         <li>
-          <Link to="/about">About</Link>
+          <Link to="/about" activeProps={{ className: "active" }}>About</Link>
         </li>
       </ul>
     </nav>
