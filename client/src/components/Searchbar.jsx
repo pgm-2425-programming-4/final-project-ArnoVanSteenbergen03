@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+import AddTask from "./AddTask";
 
 const Searchbar = ({ onViewBacklog, onStackTypeChange, activeProjectName }) => {
   const [stackTypes, setStackTypes] = useState([]);
+   const [showAddTask, setShowAddTask] = useState(false);
 
   useEffect(() => {
     async function fetchStackTypes() {
@@ -23,6 +25,11 @@ const Searchbar = ({ onViewBacklog, onStackTypeChange, activeProjectName }) => {
     }
     fetchStackTypes();
   }, []);
+
+   const handleAddTask = (task) => {
+    // Handle the new task (e.g., send to API or update state)
+    console.log("New task:", task);
+  };
 
   return (
     <div className="task-search-bar">
@@ -55,11 +62,21 @@ const Searchbar = ({ onViewBacklog, onStackTypeChange, activeProjectName }) => {
       </div>
 
       <div className="task-search-right">
-        <button className="btn add-task">Add new task</button>
+        <button
+          className="btn add-task"
+          onClick={() => setShowAddTask(true)}
+        >
+          Add new task
+        </button>
         <button className="btn view-backlog" onClick={onViewBacklog}>
           View backlog
         </button>
       </div>
+      <AddTask
+        isOpen={showAddTask}
+        onClose={() => setShowAddTask(false)}
+        onAddTask={handleAddTask}
+      />
     </div>
   );
 };

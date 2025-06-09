@@ -1,5 +1,6 @@
 @import url("./css/navigation.css");
 @import url("./css/searchbar.css");
+@import url("./css/addTaskModal.css");
 /* Container */
 table {
   width: 100%;
