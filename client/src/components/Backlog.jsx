@@ -1,22 +1,15 @@
 function Backlog({ tasks }) {
   return (
-    <>
-      <h1>Backlog Taken</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Titel</th>
-          </tr>
-        </thead>
-        <tbody>
-          {tasks.map((task) => (
-            <tr key={task.id}>
-              <td>{task.title}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </>
+    <div className="backlog-card">
+      <h2 className="backlog-card__title">Backlog </h2>
+      <ul className="backlog-card__list">
+        {tasks.map((task) => (
+          <li className="backlog-card__item" key={task.id}>
+            {task.title}
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 

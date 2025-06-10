@@ -45,6 +45,7 @@ function ProjectPage() {
         onViewBacklog={() => setShowBacklog(true)}
         onStackTypeChange={setSelectedStackType}
         activeProjectName={projectName}
+        currentProjectId={projectId}
       />
       <h3>Welcome to project {projectName}</h3>
       {showBacklog ? (

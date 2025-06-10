@@ -1,0 +1,90 @@
+/* Modern backlog card styling */
+.backlog-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+  padding: 2.5rem 2rem 2rem 2rem;
+  max-width: 500px;
+  margin: 2rem auto;
+}
+
+.backlog-card__title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #23272f;
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.backlog-card__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.backlog-card__item {
+  font-size: 1.1rem;
+  color: #23272f;
+  margin-bottom: 1.1rem;
+  line-height: 1.6;
+}
+
+/* Modern Pagination Styles */
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  justify-content: center;
+}
+
+.pagination-list {
+  display: flex;
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pagination-link,
+.pagination-previous,
+.pagination-next {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1.1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  outline: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.pagination-link.is-current {
+  background: #fff;
+  color: #2563eb;
+  border: 2px solid #2563eb;
+  cursor: default;
+}
+
+.pagination-link:not(.is-current):hover,
+.pagination-previous:not(:disabled):hover,
+.pagination-next:not(:disabled):hover {
+  background: #1e40af;
+  color: #fff;
+}
+
+.pagination-previous[disabled],
+.pagination-next[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-ellipsis {
+  color: #888;
+  padding: 0 0.5rem;
+  user-select: none;
+  font-size: 1.2rem;
+}

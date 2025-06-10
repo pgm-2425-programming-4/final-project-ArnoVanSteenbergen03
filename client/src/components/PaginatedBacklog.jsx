@@ -68,7 +68,7 @@ export default function PaginatedBacklog({ projectId }) {
     <>
       {loading && <p>Loading tasks...</p>}
       {error && <p style={{ color: "red" }}>Error: {error}</p>}
-      {!loading && !error && <Backlog tasks={tasks} />}
+      {!loading && !error && <Backlog tasks={tasks}  />}
       <Pagination
         currentPage={currentPage}
         pageCount={pageCount}

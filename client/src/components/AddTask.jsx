@@ -1,15 +1,9 @@
 import React from "react";
 import { useFetchData } from "./FetchData";
 
-const statusOptions = [
-  "To Do",
-  "In Progress",
-  "Ready for Review",
-  "Done"
-];
-
-const AddTask = ({ isOpen, onClose, onAddTask }) => {
+const AddTask = ({ isOpen, onClose, onAddTask, projectId }) => {
   const { data: stackTypes = [] } = useFetchData("stack-types");
+  const { data: statusOptions = [] } = useFetchData("statuses");
 
   if (!isOpen) return null;
 
@@ -20,7 +14,7 @@ const AddTask = ({ isOpen, onClose, onAddTask }) => {
     const title = form.title.value;
     const stack_type = form.stack_type.value;
     const status = form.status.value;
-    onAddTask({ title, description, stack_type, status });
+    onAddTask({ title, description, stack_type, status, project: projectId });
     onClose();
   };
 
@@ -34,10 +28,7 @@ const AddTask = ({ isOpen, onClose, onAddTask }) => {
           <select name="stack_type" required>
             <option value="">Select Stack Type</option>
             {stackTypes.map((type) => (
-              <option
-                key={type.id}
-                value={type.attributes?.stack_name || type.stack_name}
-              >
+              <option key={type.id} value={type.id}>
                 {type.attributes?.stack_name || type.stack_name}
               </option>
             ))}
@@ -45,8 +36,8 @@ const AddTask = ({ isOpen, onClose, onAddTask }) => {
           <select name="status" required>
             <option value="">Select Status</option>
             {statusOptions.map((status) => (
-              <option key={status} value={status}>
-                {status}
+              <option key={status.id} value={status.id}>
+                {status.attributes?.name || status.name}
               </option>
             ))}
           </select>

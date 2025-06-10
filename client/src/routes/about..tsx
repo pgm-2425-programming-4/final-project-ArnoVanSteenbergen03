@@ -14,9 +14,13 @@ function About() {
         also used Strapi for our data management.
       </p>
 
-
       <p>Made by Van Steenbergen Arno</p>
-      <a href="https://www.linkedin.com/in/arno-van-steenbergen-a6092a290/" target="_blank">Linkedin</a>
+      <a
+        href="https://www.linkedin.com/in/arno-van-steenbergen-a6092a290/"
+        target="_blank"
+      >
+        Linkedin
+      </a>
     </>
   );
 }
