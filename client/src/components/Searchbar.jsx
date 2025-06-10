@@ -2,14 +2,34 @@ import React, { useState } from "react";
 import AddTask from "./AddTask";
 import { useFetchData } from "./FetchData";
 
-const Searchbar = ({ onViewBacklog, onStackTypeChange, activeProjectName }) => {
+const Searchbar = ({ onViewBacklog, onStackTypeChange, activeProjectName,  currentProjectId }) => {
   const { data: stackTypes } = useFetchData("stack-types"); 
   const [showAddTask, setShowAddTask] = useState(false);
 
-  const handleAddTask = (task) => {
-    // Handle the new task (e.g., send to API or update state)
-    console.log("New task:", task);
-  };
+  const handleAddTask = async (task) => {
+  try {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/tasks`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
+      },
+      body: JSON.stringify({
+        data: {
+          title: task.title,
+          description: task.description,
+          stack_type: task.stack_type, 
+          task_status: task.status,
+          project: Number(task.project),    
+        },
+      }),
+    });
+    if (!res.ok) throw new Error("Failed to add task");
+    window.location.reload();
+  } catch (err) {
+    alert("Error adding task: " + err.message);
+  }
+};
 
   return (
     <div className="task-search-bar">
@@ -56,6 +76,7 @@ const Searchbar = ({ onViewBacklog, onStackTypeChange, activeProjectName }) => {
         isOpen={showAddTask}
         onClose={() => setShowAddTask(false)}
         onAddTask={handleAddTask}
+        projectId={currentProjectId}
       />
     </div>
   );
