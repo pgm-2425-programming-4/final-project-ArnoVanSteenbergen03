@@ -1,49 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useFetchData } from "./FetchData";
 
 export default function ProjectBoard({ projectId, selectedStackType }) {
-  const [tasks, setTasks] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const endpoint = projectId
+    ? `tasks?populate=*&filters[project]=${projectId}`
+    : null;
 
-  useEffect(() => {
-    async function fetchTasks() {
-      setLoading(true);
-      try {
-        const params = new URLSearchParams({
-          populate: "*",
-          "filters[project]": projectId,
-        });
-        const res = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/tasks?${params.toString()}`,
-          {
-            headers: {
-              Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
-            },
-          }
-        );
-        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-        const data = await res.json();
-        setTasks(data.data || []);
-      } catch (err) {
-        console.error(err);
-        setTasks([]);
-      } finally {
-        setLoading(false);
-      }
-    }
-    if (projectId) fetchTasks();
-  }, [projectId]);
+  const { data: tasks = [], loading } = useFetchData(endpoint);
 
-  // Get unique statuses and stack types from tasks
-  const statuses = Array.from(
-    new Set(tasks.map((task) => task.task_status?.name || "No status"))
-  );
+  const statusOrder = ["To Do", "In Progress", "Ready for review", "Done"];
 
-  // Filter tasks by selected stack type if set
+  const allStatuses = tasks
+    .map((task) => task.task_status?.name || "No status")
+    .filter((status) => status !== "Backlog");
+
+  const statuses = statusOrder.filter((status) => allStatuses.includes(status));
+
   const filteredTasks = selectedStackType
     ? tasks.filter((task) => task.stack_type?.stack_name === selectedStackType)
     : tasks;
 
-  // Group tasks by status
   function getTasksByStatus(statusName) {
     return filteredTasks.filter(
       (task) => (task.task_status?.name || "No status") === statusName

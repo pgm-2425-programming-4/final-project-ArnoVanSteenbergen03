@@ -1,0 +1,32 @@
+import { useEffect, useState } from "react";
+
+export function useFetchData(endpoint, mapFn) {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchData() {
+      setLoading(true);
+      try {
+        const res = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/${endpoint}`,
+          {
+            headers: {
+              Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
+            },
+          }
+        );
+        const json = await res.json();
+        setData(mapFn ? mapFn(json.data || []) : json.data || []);
+      } catch (err) {
+        console.error(err);
+        setData([]);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchData();
+  }, [endpoint, mapFn]);
+
+  return { data, loading };
+}

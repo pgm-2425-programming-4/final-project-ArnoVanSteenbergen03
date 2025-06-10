@@ -1,28 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import AddTask from "./AddTask";
+import { useFetchData } from "./FetchData";
 
 const Searchbar = ({ onViewBacklog, onStackTypeChange, activeProjectName }) => {
-  const [stackTypes, setStackTypes] = useState([]);
+  const { data: stackTypes } = useFetchData("stack-types"); 
+  const [showAddTask, setShowAddTask] = useState(false);
 
-  useEffect(() => {
-    async function fetchStackTypes() {
-      try {
-        const res = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/stack-types`,
-          {
-            headers: {
-              Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
-            },
-          }
-        );
-        const data = await res.json();
-        setStackTypes(data.data || []);
-      } catch (err) {
-        console.error(err);
-        setStackTypes([]);
-      }
-    }
-    fetchStackTypes();
-  }, []);
+  const handleAddTask = (task) => {
+    // Handle the new task (e.g., send to API or update state)
+    console.log("New task:", task);
+  };
 
   return (
     <div className="task-search-bar">
@@ -55,11 +42,21 @@ const Searchbar = ({ onViewBacklog, onStackTypeChange, activeProjectName }) => {
       </div>
 
       <div className="task-search-right">
-        <button className="btn add-task">Add new task</button>
+        <button
+          className="btn add-task"
+          onClick={() => setShowAddTask(true)}
+        >
+          Add new task
+        </button>
         <button className="btn view-backlog" onClick={onViewBacklog}>
           View backlog
         </button>
       </div>
+      <AddTask
+        isOpen={showAddTask}
+        onClose={() => setShowAddTask(false)}
+        onAddTask={handleAddTask}
+      />
     </div>
   );
 };
