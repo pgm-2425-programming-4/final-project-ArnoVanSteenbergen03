@@ -1,32 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import AddTask from "./AddTask";
+import { useFetchData } from "./FetchData";
 
 const Searchbar = ({ onViewBacklog, onStackTypeChange, activeProjectName }) => {
-  const [stackTypes, setStackTypes] = useState([]);
-   const [showAddTask, setShowAddTask] = useState(false);
+  const { data: stackTypes } = useFetchData("stack-types"); 
+  const [showAddTask, setShowAddTask] = useState(false);
 
-  useEffect(() => {
-    async function fetchStackTypes() {
-      try {
-        const res = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/stack-types`,
-          {
-            headers: {
-              Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
-            },
-          }
-        );
-        const data = await res.json();
-        setStackTypes(data.data || []);
-      } catch (err) {
-        console.error(err);
-        setStackTypes([]);
-      }
-    }
-    fetchStackTypes();
-  }, []);
-
-   const handleAddTask = (task) => {
+  const handleAddTask = (task) => {
     // Handle the new task (e.g., send to API or update state)
     console.log("New task:", task);
   };

@@ -1,29 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "@tanstack/react-router";
+import { useFetchData } from "./FetchData";
 
 export default function Navigation() {
-  const [projects, setProjects] = useState([]);
-
-  useEffect(() => {
-    async function fetchProjects() {
-      try {
-        const res = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/projects`,
-          {
-            headers: {
-              Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
-            },
-          }
-        );
-        const data = await res.json();
-        setProjects(data.data || []);
-      } catch (err) {
-        console.log(err);
-        setProjects([]);
-      }
-    }
-    fetchProjects();
-  }, []);
+  const { data: projects = [] } = useFetchData("projects");
 
   return (
     <nav className="navigation">
