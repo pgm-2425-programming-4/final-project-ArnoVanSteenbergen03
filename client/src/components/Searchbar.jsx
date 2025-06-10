@@ -2,34 +2,39 @@ import React, { useState } from "react";
 import AddTask from "./AddTask";
 import { useFetchData } from "./FetchData";
 
-const Searchbar = ({ onViewBacklog, onStackTypeChange, activeProjectName,  currentProjectId }) => {
-  const { data: stackTypes } = useFetchData("stack-types"); 
+const Searchbar = ({
+  onViewBacklog,
+  onStackTypeChange,
+  activeProjectName,
+  currentProjectId,
+}) => {
+  const { data: stackTypes } = useFetchData("stack-types");
   const [showAddTask, setShowAddTask] = useState(false);
 
   const handleAddTask = async (task) => {
-  try {
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/tasks`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
-      },
-      body: JSON.stringify({
-        data: {
-          title: task.title,
-          description: task.description,
-          stack_type: task.stack_type, 
-          task_status: task.status,
-          project: Number(task.project),    
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/tasks`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
         },
-      }),
-    });
-    if (!res.ok) throw new Error("Failed to add task");
-    window.location.reload();
-  } catch (err) {
-    alert("Error adding task: " + err.message);
-  }
-};
+        body: JSON.stringify({
+          data: {
+            title: task.title,
+            description: task.description,
+            stack_type: task.stack_type,
+            task_status: task.status,
+            project: Number(task.project),
+          },
+        }),
+      });
+      if (!res.ok) throw new Error("Failed to add task");
+      window.location.reload();
+    } catch (err) {
+      alert("Error adding task: " + err.message);
+    }
+  };
 
   return (
     <div className="task-search-bar">
@@ -62,10 +67,7 @@ const Searchbar = ({ onViewBacklog, onStackTypeChange, activeProjectName,  curre
       </div>
 
       <div className="task-search-right">
-        <button
-          className="btn add-task"
-          onClick={() => setShowAddTask(true)}
-        >
+        <button className="btn add-task" onClick={() => setShowAddTask(true)}>
           Add new task
         </button>
         <button className="btn view-backlog" onClick={onViewBacklog}>

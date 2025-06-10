@@ -29,25 +29,18 @@ export default function ProjectBoard({ projectId, selectedStackType }) {
   if (loading) return <p>Loading...</p>;
 
   return (
-    <div style={{ display: "flex", gap: "2rem" }}>
+    <div className="project-board">
       {statuses.map((status) => (
-        <div key={status} style={{ minWidth: 220 }}>
+        <div key={status} className="status-column">
           <h3>{status}</h3>
           {getTasksByStatus(status).map((task) => (
-            <div
-              key={task.id}
-              style={{
-                margin: "1em 0",
-                padding: 12,
-                background: "#fff",
-                color: "#333",
-                borderRadius: 8,
-                boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
-              }}
-            >
+            <div key={task.id} className="task-card">
               <strong>{task.title}</strong>
-              <div style={{ marginTop: 4, fontSize: 12, color: "#555" }}>
+              <div className="task-stack">
                 Stack: {task.stack_type?.stack_name || "No stack type"}
+              </div>
+              <div className="task-description">
+                {task.description || <em>No description</em>}
               </div>
             </div>
           ))}
