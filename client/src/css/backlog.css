@@ -8,7 +8,7 @@
   margin: 2rem auto;
 }
 
-.backlog-card__title {
+.backlog__title {
   font-size: 2rem;
   font-weight: 700;
   color: #23272f;
@@ -16,17 +16,30 @@
   text-align: left;
 }
 
-.backlog-card__list {
+.backlog__list {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.backlog-card__item {
+.backlog__item {
   font-size: 1.1rem;
   color: #23272f;
   margin-bottom: 1.1rem;
   line-height: 1.6;
+}
+
+backlog__button {
+  display: inline-block;
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
 }
 
 /* Modern Pagination Styles */

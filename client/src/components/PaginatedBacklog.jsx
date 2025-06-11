@@ -8,7 +8,7 @@ export default function PaginatedBacklog({ projectId }) {
   const [pageCount, setPageCount] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const pageSize = 5;
+  const pageSize = 10;
 
   useEffect(() => {
     async function fetchTasks(page) {
