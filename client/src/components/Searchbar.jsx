@@ -23,14 +23,14 @@ const Searchbar = ({
           data: {
             title: task.title,
             description: task.description,
-            stack_type: task.stack_type,
-            task_status: task.status,
+            stack_type: Number(task.stack_type),
+            task_status: Number(task.status),
             project: Number(task.project),
           },
         }),
       });
       if (!res.ok) throw new Error("Failed to add task");
-      window.location.reload();
+      //window.location.reload();
     } catch (err) {
       alert("Error adding task: " + err.message);
     }
