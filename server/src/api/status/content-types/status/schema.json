@@ -18,7 +18,7 @@
       "type": "uid",
       "targetField": "name"
     },
-    "tasks": {
+    "task": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::task.task",

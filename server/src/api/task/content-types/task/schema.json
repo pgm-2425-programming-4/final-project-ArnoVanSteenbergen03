@@ -15,12 +15,6 @@
       "type": "string",
       "required": true
     },
-    "task_status": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::status.status",
-      "inversedBy": "tasks"
-    },
     "project": {
       "type": "relation",
       "relation": "manyToOne",
@@ -35,6 +29,12 @@
     "description": {
       "type": "text",
       "required": true
+    },
+    "task_status": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::status.status",
+      "inversedBy": "task"
     }
   }
 }
