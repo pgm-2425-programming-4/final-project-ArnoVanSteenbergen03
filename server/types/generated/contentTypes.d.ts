@@ -107,6 +107,43 @@ export interface AdminApiTokenPermission extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface AdminAuditLog extends Struct.CollectionTypeSchema {
+  collectionName: 'strapi_audit_logs';
+  info: {
+    displayName: 'Audit Log';
+    pluralName: 'audit-logs';
+    singularName: 'audit-log';
+  };
+  options: {
+    draftAndPublish: false;
+    timestamps: false;
+  };
+  pluginOptions: {
+    'content-manager': {
+      visible: false;
+    };
+    'content-type-builder': {
+      visible: false;
+    };
+  };
+  attributes: {
+    action: Schema.Attribute.String & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    date: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'admin::audit-log'> &
+      Schema.Attribute.Private;
+    payload: Schema.Attribute.JSON;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
+  };
+}
+
 export interface AdminPermission extends Struct.CollectionTypeSchema {
   collectionName: 'admin_permissions';
   info: {
@@ -376,7 +413,6 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
 export interface ApiProjectProject extends Struct.CollectionTypeSchema {
   collectionName: 'projects';
   info: {
-    description: '';
     displayName: 'Project';
     pluralName: 'projects';
     singularName: 'project';
@@ -394,7 +430,7 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
       'api::project.project'
     > &
       Schema.Attribute.Private;
-    project_name: Schema.Attribute.String & Schema.Attribute.Required;
+    project_name: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     slug: Schema.Attribute.UID<'project_name'>;
     tasks: Schema.Attribute.Relation<'oneToMany', 'api::task.task'>;
@@ -425,7 +461,7 @@ export interface ApiStackTypeStackType extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    stack_name: Schema.Attribute.String & Schema.Attribute.Required;
+    stack_name: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -452,10 +488,8 @@ export interface ApiStatusStatus extends Struct.CollectionTypeSchema {
       'api::status.status'
     > &
       Schema.Attribute.Private;
-    name: Schema.Attribute.String & Schema.Attribute.Required;
+    name: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
-    slug: Schema.Attribute.UID<'name'>;
-    task: Schema.Attribute.Relation<'oneToMany', 'api::task.task'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -465,7 +499,6 @@ export interface ApiStatusStatus extends Struct.CollectionTypeSchema {
 export interface ApiTaskTask extends Struct.CollectionTypeSchema {
   collectionName: 'tasks';
   info: {
-    description: '';
     displayName: 'task';
     pluralName: 'tasks';
     singularName: 'task';
@@ -477,7 +510,7 @@ export interface ApiTaskTask extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    description: Schema.Attribute.Text;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::task.task'> &
       Schema.Attribute.Private;
@@ -487,8 +520,8 @@ export interface ApiTaskTask extends Struct.CollectionTypeSchema {
       'oneToOne',
       'api::stack-type.stack-type'
     >;
-    task_status: Schema.Attribute.Relation<'manyToOne', 'api::status.status'>;
-    title: Schema.Attribute.String & Schema.Attribute.Required;
+    task_status: Schema.Attribute.Relation<'oneToOne', 'api::status.status'>;
+    title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -999,6 +1032,7 @@ declare module '@strapi/strapi' {
     export interface ContentTypeSchemas {
       'admin::api-token': AdminApiToken;
       'admin::api-token-permission': AdminApiTokenPermission;
+      'admin::audit-log': AdminAuditLog;
       'admin::permission': AdminPermission;
       'admin::role': AdminRole;
       'admin::transfer-token': AdminTransferToken;

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useFetchData } from "./FetchData";
 
-async function updateTask(taskId, updatedFields) {
-  console.log(taskId);
-  await fetch(`${import.meta.env.VITE_API_URL}/api/tasks/${taskId}`, {
+async function updateTask(task, updatedFields) {
+  console.log("Updating task:", task, );
+  await fetch(`${import.meta.env.VITE_API_URL}/api/tasks/${task.documentId}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -21,13 +21,12 @@ export default function UpdateTask({ task, onClose, onUpdated }) {
   const [saving, setSaving] = useState(false);
 
   const handleSave = async () => {
-  setSaving(true);
-  console.log("Updating task with ID:", task.id); 
-  await updateTask(task.id, { task_status: Number(editStatus) });
-  setSaving(false);
-  if (onUpdated) onUpdated();
-  onClose();
-};
+    setSaving(true);
+    await updateTask(task, { task_status: Number(editStatus) });
+    setSaving(false);
+    if (onUpdated) onUpdated();
+    onClose();
+  };
 
   if (loadingStatuses)
     return (

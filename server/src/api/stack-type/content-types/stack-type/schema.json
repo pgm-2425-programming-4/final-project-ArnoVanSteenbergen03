@@ -9,10 +9,10 @@
   "options": {
     "draftAndPublish": true
   },
+  "pluginOptions": {},
   "attributes": {
     "stack_name": {
-      "type": "string",
-      "required": true
+      "type": "string"
     }
   }
 }

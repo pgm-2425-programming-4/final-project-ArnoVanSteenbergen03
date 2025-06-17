@@ -41,7 +41,6 @@ export default function ProjectBoard({ projectId, selectedStackType }) {
               key={task.id}
               className="task-card"
               onClick={() => {
-                console.log("Clicked task:", task);
                 setEditingTask(task);
               }}
               style={{ cursor: "pointer" }}

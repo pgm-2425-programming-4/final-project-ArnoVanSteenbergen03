@@ -4,16 +4,15 @@
   "info": {
     "singularName": "project",
     "pluralName": "projects",
-    "displayName": "Project",
-    "description": ""
+    "displayName": "Project"
   },
   "options": {
     "draftAndPublish": true
   },
+  "pluginOptions": {},
   "attributes": {
     "project_name": {
-      "type": "string",
-      "required": true
+      "type": "string"
     },
     "slug": {
       "type": "uid",

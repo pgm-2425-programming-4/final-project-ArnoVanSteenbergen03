@@ -7,36 +7,30 @@
     "build": "strapi build",
     "console": "strapi console",
     "deploy": "strapi deploy",
-    "dev": "set NODE_ENV=development&& strapi develop",
-    "develop": "set NODE_ENV=development&& strapi develop",
-    "start": "NODE_ENV=production strapi start",
-    "prod": "set NODE_ENV=production&& strapi start",
+    "dev": "strapi develop",
+    "develop": "strapi develop",
+    "start": "strapi start",
     "strapi": "strapi",
     "upgrade": "npx @strapi/upgrade latest",
-    "upgrade:dry": "npx @strapi/upgrade latest --dry",
-    "local": "copy .env.development .env && npm run dev",
-    "render": "copy .env.production .env && npm run prod",
-    "test:db": "psql postgresql://%DATABASE_USERNAME%:%DATABASE_PASSWORD%@%DATABASE_HOST%/%DATABASE_NAME% -c \"SELECT 1\""
+    "upgrade:dry": "npx @strapi/upgrade latest --dry"
   },
   "dependencies": {
-    "@strapi/plugin-cloud": "5.13.0",
-    "@strapi/plugin-users-permissions": "5.13.0",
-    "@strapi/strapi": "5.13.0",
+    "@strapi/plugin-cloud": "5.16.0",
+    "@strapi/plugin-users-permissions": "5.16.0",
+    "@strapi/strapi": "5.16.0",
     "better-sqlite3": "11.3.0",
-    "pg": "^8.16.0",
-    "pg-connection-string": "^2.9.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.0.0",
-    "strapi": "^3.6.11",
     "styled-components": "^6.0.0"
   },
+  "devDependencies": {},
   "engines": {
     "node": ">=18.0.0 <=22.x.x",
     "npm": ">=6.0.0"
   },
   "strapi": {
-    "uuid": "d735956c-f8a3-43d2-860b-1164a1e3a8cf",
-    "installId": "661a69a6d85a45addb1a4b23861520cb0618cf51090bd1ba4b1d10b8d793d6f2"
+    "uuid": "a39495e7-e53c-44b5-b0b3-84820ed9053e",
+    "installId": "c4ccd8c9a7fb8064d143464a7761e53a993c0ec7b86486f39814b5ea3a3351ca"
   }
 }
