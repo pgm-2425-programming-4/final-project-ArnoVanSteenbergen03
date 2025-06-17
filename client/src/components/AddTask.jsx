@@ -21,12 +21,20 @@ const AddTask = ({ isOpen, onClose, onAddTask, projectId }) => {
   return (
     <div className="modal-overlay">
       <div className="modal">
-        <h2 className="modal__title">
-          Add New Task
-        </h2>
+        <h2 className="modal__title">Add New Task</h2>
         <form className="modal__form" onSubmit={handleSubmit}>
-          <input className="modal__input" name="title" placeholder="Task name" required />
-          <input className="modal__input" name="description" placeholder="Task description" required />
+          <input
+            className="modal__input"
+            name="title"
+            placeholder="Task name"
+            required
+          />
+          <input
+            className="modal__input"
+            name="description"
+            placeholder="Task description"
+            required
+          />
           <select className="modal__select" name="stack_type" required>
             <option value="">Select Stack Type</option>
             {stackTypes.map((type) => (
@@ -43,7 +51,9 @@ const AddTask = ({ isOpen, onClose, onAddTask, projectId }) => {
               </option>
             ))}
           </select>
-          <button className="modal__button" type="submit">Add Task</button>
+          <button className="modal__button" type="submit">
+            Add Task
+          </button>
           <button className="modal__button" type="button" onClick={onClose}>
             Cancel
           </button>

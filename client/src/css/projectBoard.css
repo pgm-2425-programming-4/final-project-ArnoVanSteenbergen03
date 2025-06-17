@@ -27,3 +27,64 @@
   font-size: 13px;
   color: #444;
 }
+
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: #fff;
+  color: #333;
+  border-radius: 10px;
+  padding: 2rem 2.5rem;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+  min-width: 320px;
+  max-width: 90vw;
+}
+
+.modal h2 {
+  margin-top: 0;
+  font-size: 1.3rem;
+}
+
+.modal label {
+  display: block;
+  margin: 1rem 0 0.5rem 0;
+  font-weight: 500;
+}
+
+.modal select {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #bbb;
+  margin-bottom: 1rem;
+}
+
+.modal button {
+  margin-right: 1rem;
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 5px;
+  background: #2563eb;
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.modal button[disabled] {
+  background: #b6c3e6;
+  cursor: not-allowed;
+}
+
+.modal button:last-child {
+  background: #e5e7eb;
+  color: #222;
+}
