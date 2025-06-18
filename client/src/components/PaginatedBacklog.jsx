@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Backlog from "./Backlog";
 import Pagination from "./Pagination";
 
-export default function PaginatedBacklog({ projectId }) {
+export default function PaginatedBacklog({ project }) {
   const [tasks, setTasks] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageCount, setPageCount] = useState(1);
@@ -17,8 +17,8 @@ export default function PaginatedBacklog({ projectId }) {
       try {
         const params = new URLSearchParams({
           populate: "task_status",
-          "filters[task_status][slug][$eq]": "backlog",
-          "filters[project][id][$eq]": projectId,
+          "filters[task_status][name][$eq]": "Backlog",
+          "filters[project][documentId][$eq]": project.documentId,
           "pagination[page]": page,
           "pagination[pageSize]": pageSize,
         });
@@ -55,10 +55,10 @@ export default function PaginatedBacklog({ projectId }) {
       }
     }
 
-    if (projectId) {
+    if (project) {
       fetchTasks(currentPage);
     }
-  }, [currentPage, projectId]);
+  }, [currentPage, project]);
 
   function handlePageChange(page) {
     setCurrentPage(page);

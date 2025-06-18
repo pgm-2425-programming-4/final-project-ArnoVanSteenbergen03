@@ -50,7 +50,7 @@ function ProjectPage() {
       <h3>Welcome to project {projectName}</h3>
       {showBacklog ? (
         <>
-          <PaginatedBacklog projectId={project} />
+          <PaginatedBacklog project={project} />
           <button
             className="backlog__button"
             onClick={() => setShowBacklog(false)}
