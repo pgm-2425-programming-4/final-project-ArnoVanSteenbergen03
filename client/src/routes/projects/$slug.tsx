@@ -9,7 +9,7 @@ function ProjectPage() {
   const [showBacklog, setShowBacklog] = useState(false);
   const [selectedStackType, setSelectedStackType] = useState("");
   const [projectName, setProjectName] = useState("");
-  const [projectId, setProjectId] = useState(null);
+  const [project, setProject] = useState(null);
 
   useEffect(() => {
     async function fetchProject() {
@@ -28,16 +28,16 @@ function ProjectPage() {
         const data = await res.json();
         const projectData = data.data?.[0];
         setProjectName(projectData?.project_name || `Project ${slug}`);
-        setProjectId(projectData?.id || null);
+        setProject(projectData || null);
       } catch {
         setProjectName(`Project ${slug}`);
-        setProjectId(null);
+        setProject(null);
       }
     }
     fetchProject();
   }, [slug]);
 
-  if (!projectId) return <p>Loading project...</p>;
+  if (!project) return <p>Loading project...</p>;
 
   return (
     <div>
@@ -45,12 +45,12 @@ function ProjectPage() {
         onViewBacklog={() => setShowBacklog(true)}
         onStackTypeChange={setSelectedStackType}
         activeProjectName={projectName}
-        currentProjectId={projectId}
+        currentProject={project}
       />
       <h3>Welcome to project {projectName}</h3>
       {showBacklog ? (
         <>
-          <PaginatedBacklog projectId={projectId} />
+          <PaginatedBacklog projectId={project} />
           <button
             className="backlog__button"
             onClick={() => setShowBacklog(false)}
@@ -60,7 +60,7 @@ function ProjectPage() {
         </>
       ) : (
         <ProjectBoard
-          projectId={projectId}
+          project={project}
           selectedStackType={selectedStackType}
         />
       )}
