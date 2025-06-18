@@ -6,7 +6,7 @@ const Searchbar = ({
   onViewBacklog,
   onStackTypeChange,
   activeProjectName,
-  currentProjectId,
+  currentProject,
 }) => {
   const { data: stackTypes } = useFetchData("stack-types");
   const [showAddTask, setShowAddTask] = useState(false);
@@ -25,12 +25,12 @@ const Searchbar = ({
             description: task.description,
             stack_type: Number(task.stack_type),
             task_status: Number(task.status),
-            project: Number(task.project),
+            project: Number(task.project.id),
           },
         }),
       });
       if (!res.ok) throw new Error("Failed to add task");
-      //window.location.reload();
+      window.location.reload();
     } catch (err) {
       alert("Error adding task: " + err.message);
     }
@@ -78,7 +78,7 @@ const Searchbar = ({
         isOpen={showAddTask}
         onClose={() => setShowAddTask(false)}
         onAddTask={handleAddTask}
-        projectId={currentProjectId}
+        project={currentProject}
       />
     </div>
   );

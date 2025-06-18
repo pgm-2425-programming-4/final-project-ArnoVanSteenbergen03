@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { useFetchData } from "./FetchData";
 import UpdateTask from "./UpdateTask";
 
-export default function ProjectBoard({ projectId, selectedStackType }) {
-  const endpoint = projectId
-    ? `tasks?populate=*&filters[project]=${projectId}`
+export default function ProjectBoard({ project, selectedStackType }) {
+  const endpoint = project
+    ? `tasks?populate=*&filters[project][documentId][$eq]=${project.documentId}`
     : null;
 
   const { data: tasks = [], loading, refetch } = useFetchData(endpoint);

@@ -9,7 +9,7 @@ function ProjectBacklog() {
   return (
     <div>
       <h2>Backlog for Project {slug}</h2>
-      <PaginatedBacklog projectId={slug} />
+      <PaginatedBacklog project={slug} />
     </div>
   );
 }

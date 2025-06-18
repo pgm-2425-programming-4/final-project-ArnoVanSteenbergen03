@@ -1,9 +1,10 @@
 import React from "react";
 import { useFetchData } from "./FetchData";
 
-const AddTask = ({ isOpen, onClose, onAddTask, projectId }) => {
+const AddTask = ({ isOpen, onClose, onAddTask, project }) => {
   const { data: stackTypes = [] } = useFetchData("stack-types");
   const { data: statusOptions = [] } = useFetchData("statuses");
+
 
   if (!isOpen) return null;
 
@@ -14,7 +15,7 @@ const AddTask = ({ isOpen, onClose, onAddTask, projectId }) => {
     const title = form.title.value;
     const stack_type = form.stack_type.value;
     const status = form.status.value;
-    onAddTask({ title, description, stack_type, status, project: projectId });
+    onAddTask({ title, description, stack_type, status, project });
     onClose();
   };
 
