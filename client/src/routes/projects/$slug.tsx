@@ -51,7 +51,12 @@ function ProjectPage() {
       {showBacklog ? (
         <>
           <PaginatedBacklog projectId={projectId} />
-          <button className="backlog__button" onClick={() => setShowBacklog(false)}>Back to board</button>
+          <button
+            className="backlog__button"
+            onClick={() => setShowBacklog(false)}
+          >
+            Back to board
+          </button>
         </>
       ) : (
         <ProjectBoard
