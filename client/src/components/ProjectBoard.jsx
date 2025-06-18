@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFetchData } from "./FetchData";
+import UpdateTask from "./UpdateTask";
 
 export default function ProjectBoard({ projectId, selectedStackType }) {
   const endpoint = projectId
     ? `tasks?populate=*&filters[project]=${projectId}`
     : null;
 
-  const { data: tasks = [], loading } = useFetchData(endpoint);
+  const { data: tasks = [], loading, refetch } = useFetchData(endpoint);
+
+  const [editingTask, setEditingTask] = useState(null);
 
   const statusOrder = ["To Do", "In Progress", "Ready for review", "Done"];
 
@@ -34,7 +37,14 @@ export default function ProjectBoard({ projectId, selectedStackType }) {
         <div key={status} className="status-column">
           <h3>{status}</h3>
           {getTasksByStatus(status).map((task) => (
-            <div key={task.id} className="task-card">
+            <div
+              key={task.id}
+              className="task-card"
+              onClick={() => {
+                setEditingTask(task);
+              }}
+              style={{ cursor: "pointer" }}
+            >
               <strong>{task.title}</strong>
               <div className="task-stack">
                 Stack: {task.stack_type?.stack_name || "No stack type"}
@@ -46,6 +56,16 @@ export default function ProjectBoard({ projectId, selectedStackType }) {
           ))}
         </div>
       ))}
+
+      {editingTask && (
+        <div className="modal-overlay">
+          <UpdateTask
+            task={editingTask}
+            onClose={() => setEditingTask(null)}
+            onUpdated={refetch}
+          />
+        </div>
+      )}
     </div>
   );
 }

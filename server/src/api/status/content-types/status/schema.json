@@ -9,20 +9,10 @@
   "options": {
     "draftAndPublish": true
   },
+  "pluginOptions": {},
   "attributes": {
     "name": {
-      "type": "string",
-      "required": true
-    },
-    "slug": {
-      "type": "uid",
-      "targetField": "name"
-    },
-    "task": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::task.task",
-      "mappedBy": "task_status"
+      "type": "string"
     }
   }
 }
