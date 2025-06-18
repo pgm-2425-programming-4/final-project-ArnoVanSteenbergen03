@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useFetchData } from "./FetchData";
 
 async function updateTask(task, updatedFields) {
-  console.log("Updating task:", task, );
+  console.log("Updating task:", task);
   await fetch(`${import.meta.env.VITE_API_URL}/api/tasks/${task.documentId}`, {
     method: "PUT",
     headers: {
