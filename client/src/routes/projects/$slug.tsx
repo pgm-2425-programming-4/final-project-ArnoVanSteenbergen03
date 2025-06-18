@@ -59,10 +59,7 @@ function ProjectPage() {
           </button>
         </>
       ) : (
-        <ProjectBoard
-          project={project}
-          selectedStackType={selectedStackType}
-        />
+        <ProjectBoard project={project} selectedStackType={selectedStackType} />
       )}
     </div>
   );
